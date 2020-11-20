@@ -1,5 +1,6 @@
 from random import choice
 from ability import Ability
+from weapon import Weapon
 from armor import Armor
 
 class Hero:
@@ -104,7 +105,10 @@ class Hero:
         
         random_winner = choice([self, opponent])
         print(f"{random_winner.name} won!")
-
+    
+    def add_weapon(self, weapon):
+        '''Add weapon to self.abilities'''
+        self.abilities.append(weapon)
 
 if __name__ == "__main__":
     my_hero = Hero("Grace Hopper", 200)
@@ -149,3 +153,8 @@ if __name__ == "__main__":
     hero2.add_ability(ability3)
     hero2.add_ability(ability4)
     hero1.fight(hero2)
+
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
+    print(hero.attack())
