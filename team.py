@@ -1,4 +1,5 @@
 from hero import Hero
+import random
 
 
 class Team:
@@ -26,12 +27,44 @@ class Team:
             return 0
 
     def view_all_heroes(self):
-      '''Prints out all heroes to the console.'''
-      
-      for hero in self.heroes:
-        print(hero.name)
+        '''Prints out all heroes to the console.'''
+        for hero in self.heroes:
+            print(hero.name)
 
     def add_hero(self, hero):
-      '''Add Hero object to self.heroes.'''
+        '''Add Hero object to self.heroes.'''
+        self.heroes.append(hero)
 
-      self.heroes.append(hero)
+    def stats(self):
+        '''Print team statistics'''
+        for hero in self.heroes:
+            kd = hero.kills / hero.deaths
+            print("{} Kill/Deaths:{}".format(hero.name, kd))
+
+    def revive_heroes(self, health=100):
+        '''Reset all heroes health to starting_health'''
+        for hero in self.heroes:
+            hero.current_health = hero.starting_health
+
+    def attack(self, other_team):
+        ''' Battle each team against each other.'''
+
+        living_heroes = list()
+        living_opponents = list()
+
+        for hero in self.heroes:
+            living_heroes.append(hero)
+
+        for hero in other_team.heroes:
+            living_opponents.append(hero)
+
+        while len(living_heroes) > 0 and len(living_opponents) > 0:
+            random_hero = random.choice(living_heroes)
+            random_opponent = random.choice(living_opponents)
+
+            random_hero.fight(random_opponent)
+
+            if random_hero.is_alive():
+              living_opponents.remove(random_opponent)
+            else:
+              living_heroes.remove(random_hero)
